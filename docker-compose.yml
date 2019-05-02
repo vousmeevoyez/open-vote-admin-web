@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    restart: always
+    image: postgres:alpine
+    env_file: .env
+    volumes:
+    - "prci_volume:/var/lib/postgresql/data"
+
+  web:
+    restart: always
+    entrypoint: ./build.sh
+    env_file: .env
+    build:
+      context: .
+      dockerfile : dockerfiles/main/Dockerfile
+    ports:
+      - 5003:5003
+    depends_on:
+      - db
+
+volumes:
+  prci_volume:

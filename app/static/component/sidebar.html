@@ -1,0 +1,51 @@
+<div class="left_col scroll-view">
+    <div class="navbar nav_title" style="border: 0;">
+        <a href="" class="site_title"><span><img src="{{ url_for('static', filename='images/logo_white.png')}}"></span></a>
+    </div>
+    <div class="clearfix"></div>
+    <!-- menu profile quick info -->
+    <div class="profile clearfix">
+        <div class="profile_pic">
+            <img src="/static/images/empty_user.png" alt="..." class="img-circle profile_img">
+        </div>
+        <div class="profile_info">
+            <span>Hello,</span>
+            <h2> {{ session["username"] }} </h2>
+        </div>
+    </div>
+    <!-- /menu profile quick info -->
+    <br />
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+            <h3>Menu</h3>
+            <ul class="nav side-menu">
+                <li><a href="{{ url_for('administrator.users')}}"><i class="fa fa-user"></i> Users
+                        <!--<span class="fa fa-chevron-down"></span>--></a>
+                    <!--<ul class="nav child_menu">
+            <li><a href="/home/index">Dashboard</a></li>
+            <li><a href="/home/index2">Dashboard2</a></li>
+            <li><a href="/home/index3">Dashboard3</a></li>
+          </ul>-->
+                </li>
+                <li><a href="{{ url_for('administrator.elections')}}"><i class="fa fa-archive"></i> Elections
+                        <!--<span class="fa fa-chevron-down"></span>--></a>
+                    <!--<ul class="nav child_menu">
+            <li><a href="/home/index">Dashboard</a></li>
+            <li><a href="/home/index2">Dashboard2</a></li>
+            <li><a href="/home/index3">Dashboard3</a></li>
+          </ul>-->
+                </li>
+                <li><a href="{{ url_for('administrator.votes')}}"><i class="fa fa-check"></i> Votes
+                        <!--<span class="fa fa-chevron-down"></span>--></a>
+                    <!--<ul class="nav child_menu">
+            <li><a href="/home/index">Dashboard</a></li>
+            <li><a href="/home/index2">Dashboard2</a></li>
+            <li><a href="/home/index3">Dashboard3</a></li>
+          </ul>-->
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /sidebar menu -->
+</div>
