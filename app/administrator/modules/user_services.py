@@ -132,3 +132,24 @@ class UserServices:
         # end try
 
         return jsonify(response)
+
+    def enroll(self, candidate_id):
+        response = {
+            "status"  : "success",
+            "message" : "successfully enroll user!"
+        }
+        request = user_pb2.EnrollUserRequest()
+        request.header.access_token = self._token
+        request.header.user_id = self.user_id
+        request.header.candidate_id = candidate_id
+
+        try:
+            result = self.user_stub.EnrollUser(request)
+        except grpc.RpcError as error:
+            print(error.details())
+            response["status"] = "failed"
+            response["message"] = error.details()
+            return jsonify(response)
+        # end try
+
+        return jsonify(response)

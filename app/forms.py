@@ -5,6 +5,8 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import *
 
+from app.administrator.modules.user_services import UserServices
+
 ## login and registration
 class LoginForm(FlaskForm):
     """ form for login """
@@ -21,8 +23,15 @@ class CreateAccountForm(FlaskForm):
     password = PasswordField('Password')
     role = SelectField('Role', choices=[("PARTICIPANT", "PARTICIPANT"),
                                         ("ADMIN", "ADMIN"),
-                                        ("COMMITEE", "COMMITEE"),
                                        ])
+
+class EnrollCandidateForm(FlaskForm):
+    """ form for create user """
+    user_id = SelectField('User')
+    def __init__(self, *args, **kwargs):
+        super(EnrollCandidateForm, self).__init__(*args, **kwargs)
+        self.user_id.choices = [(user["id"], user["username"]) for user in UserServices().show_all()]
+
 
 class CreateCandidateForm(FlaskForm):
     """ form for create election form """

@@ -1,13 +1,7 @@
 version: '3'
 services:
-  db:
-    restart: always
-    image: postgres:alpine
-    env_file: .env
-    volumes:
-    - "prci_volume:/var/lib/postgresql/data"
 
-  web:
+  admin-web:
     restart: always
     entrypoint: ./build.sh
     env_file: .env
@@ -16,8 +10,11 @@ services:
       dockerfile : dockerfiles/main/Dockerfile
     ports:
       - 5003:5003
-    depends_on:
-      - db
+    networks:
+        default:
+                ipv4_address: 172.16.238.15
 
-volumes:
-  prci_volume:
+networks:
+  default:
+    external:
+        name : open-vote-api_app_net

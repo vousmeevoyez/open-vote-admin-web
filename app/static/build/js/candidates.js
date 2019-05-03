@@ -7,12 +7,25 @@ alertify: false
  * Create a new account.
  */
 
+ var candidate_id = "";
+
 function openModal() {
     $('#candidate-form *').filter(':input').each(function() {
         //for select option
         this.value = "";
     });
     $('#modalBox').modal('show');
+
+}
+
+function openModal2(id) {
+    console.log(id);
+    $('#user-candidate-form *').filter(':input').each(function() {
+        //for select option
+        this.value = "";
+    });
+    $('#modalBox2').modal('show');
+    candidate_id = id;
 
 }
 
@@ -28,6 +41,28 @@ function addCandidate() { // eslint-disable-line no-unused-vars
             url: '/admin/api/' + election_id + "/candidates",
             dataType: 'json',
             data: $('#candidate-form').serialize(),
+            success: function(result) {
+                if (result.status == 'failed') {
+                    alertify.notify(result.message, 'error', 5);
+                } else {
+                    alertify.notify(result.message, 'success', 5);
+                    location.reload();
+                }
+            },
+        });
+    }
+}
+
+function enrollUser() { // eslint-disable-line no-unused-vars
+    // extract election ID from url
+    if ($('#user-candidate-form').parsley().validate()) {
+        var form = $('#user-candidate-form').serialize();
+        var user_id = form.split("=")[1];
+
+        $.ajax({
+            type: 'POST',
+            url: '/admin/api/' + user_id + "/enroll/" + candidate_id,
+            dataType: 'json',
             success: function(result) {
                 if (result.status == 'failed') {
                     alertify.notify(result.message, 'error', 5);

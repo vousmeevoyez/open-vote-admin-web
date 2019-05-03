@@ -49,12 +49,18 @@ def candidates(election_id):
     candidates = CandidateServices(election_id=election_id).show_all()
     print(candidates)
     return render_template('candidates.html', candidates=candidates,
-                               form=CreateCandidateForm())
+                            form=CreateCandidateForm(), form2=EnrollCandidateForm())
 
 @blueprint.route('/api/<string:election_id>/candidates', methods=["POST"])
 #@login_required
 def api_candidate(election_id):
     response = CandidateServices(election_id=election_id).add(request.form)
+    return response
+
+@blueprint.route('/api/<string:user_id>/enroll/<string:candidate_id>', methods=["POST"])
+#@login_required
+def api_enroll_candidate(user_id, candidate_id):
+    response = UserServices(user_id=user_id).enroll(candidate_id)
     return response
 
 @blueprint.route('/api/<string:election_id>/candidates/<string:candidate_id>', methods=["GET", "PUT", "DELETE"])

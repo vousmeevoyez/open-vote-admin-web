@@ -56,6 +56,7 @@
                                     <th>Order No</th>
                                     <th>Name</th>
                                     <th>Description</th>
+                                    <th>Users</th>
                                     <th>Vote Count</th>
                                     <th>Images</th>
                                     <th>Created At</th>
@@ -68,6 +69,13 @@
                                     <td>{{candidate.order_no}}</td>
                                     <td>{{candidate.name}}</td>
                                     <td>{{candidate.description}}</td>
+                                    <td>
+                                        <ul style="list-style: none;">
+                                            {% for user in candidate.users %}
+                                            <li>{{user.name}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
                                     <td>{{candidate.vote}}</td>
                                     <td>{{candidate.images}}</td>
                                     <td>{{candidate.created_at}}</td>
@@ -79,6 +87,8 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#" onclick="openModal2('{{candidate.id}}')">Enroll Candidates</a>
+                                                </li>
                                                 <li><a href="#" onclick="getCandidate('{{candidate.id}}')">Edit</a>
                                                 </li>
                                                 <li>
@@ -120,6 +130,33 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success" onclick="addCandidate()" id="formButton">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalBox2" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="modalBoxTitle">Enroll User as Candidate</h4>
+            </div>
+            <div class="modal-body">
+                <form id="user-candidate-form" data-parsley-validate class="form-horizontal form-label-left">
+                    {% for field in form2 if field.widget.input_type != 'hidden' %}
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{field.label.text}}<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{ field(class="form-control col-md-7 col-xs-12 required") }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success" onclick="enrollUser()" id="formButton">Submit</button>
             </div>
         </div>
     </div>
