@@ -1,20 +1,20 @@
 version: '3'
 services:
 
-  admin-web:
+  vote-admin-web:
     restart: always
     entrypoint: ./build.sh
     env_file: .env
+    ports:
+    - 5003:5003
     build:
       context: .
       dockerfile : dockerfiles/main/Dockerfile
-    ports:
-      - 5003:5003
     networks:
-        default:
-                ipv4_address: 172.16.238.15
+    - traefik-net
+    labels:
+    - "traefik.frontend.rule=Host:vote-admin.vousmeevoyez.xyz"
 
 networks:
-  default:
-    external:
-        name : open-vote-api_app_net
+  traefik-net:
+    external: true
