@@ -7,6 +7,7 @@ import jwt
 from sqlalchemy.exc import IntegrityError
 from flask import jsonify, session
 
+from app.core import Services
 from app.configuration.config import Config
 # rpc
 from app.rpc import auth_pb2
@@ -14,10 +15,11 @@ from app.rpc import auth_pb2_grpc
 from app.rpc import user_pb2 
 from app.rpc import user_pb2_grpc
 
-class AuthServices:
+class AuthServices(Services):
 
     def __init__(self):
-        self.channel = grpc.insecure_channel(Config.GRPC_CHANNEL)
+        Services.__init__(self)
+
         self.auth_stub = auth_pb2_grpc.AuthStub(self.channel)
         self.user_stub = user_pb2_grpc.UserStub(self.channel)
     # end def

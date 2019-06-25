@@ -6,6 +6,7 @@ from google.protobuf.json_format import MessageToDict
 from flask import jsonify, session
 
 from app import db
+from app.core import Services
 
 from app.configuration.config import Config
 
@@ -13,10 +14,11 @@ from app.configuration.config import Config
 from app.rpc import user_pb2
 from app.rpc import user_pb2_grpc
 
-class UserServices:
+class UserServices(Services):
 
     def __init__(self, user_id=None):
-        self.channel = grpc.insecure_channel(Config.GRPC_CHANNEL)
+        Services.__init__(self)
+
         self.user_stub = user_pb2_grpc.UserStub(self.channel)
         self._token = session["access_token"]
         self.user_id = user_id

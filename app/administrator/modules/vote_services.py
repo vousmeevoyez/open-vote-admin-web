@@ -3,9 +3,11 @@
 """
 import grpc
 from google.protobuf.json_format import MessageToDict
-from flask import jsonify, session
+from flask import session
 
 from app import db
+
+from app.core import Services
 
 from app.configuration.config import Config
 
@@ -13,10 +15,11 @@ from app.configuration.config import Config
 from app.rpc import election_pb2
 from app.rpc import election_pb2_grpc
 
-class VoteResultServices:
+class VoteResultServices(Services):
 
     def __init__(self):
-        self.channel = grpc.insecure_channel(Config.GRPC_CHANNEL)
+        Services.__init__(self)
+
         self.election_stub = election_pb2_grpc.ElectionStub(self.channel)
         self._token = session["access_token"]
 

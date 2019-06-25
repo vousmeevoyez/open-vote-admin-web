@@ -7,10 +7,10 @@ import csv
 import os
 import unittest
 
-from flask_migrate  import Migrate, MigrateCommand
-from flask_script   import Manager, Shell
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager, Shell
 
-from app    import create_app, db
+from app import create_app, db
 
 app = create_app(os.getenv("ENVIRONMENT") or 'dev')
 app.app_context().push()
