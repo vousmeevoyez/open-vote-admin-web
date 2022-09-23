@@ -19,7 +19,7 @@ Jinja2==2.10
 Mako==1.0.7
 MarkupSafe==1.1.0
 nameparser==1.0.2
-protobuf==3.7.1
+protobuf==3.18.3
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
 pycparser==2.19
